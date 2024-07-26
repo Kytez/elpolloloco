@@ -16,6 +16,7 @@ class World {
     otherDirection = false;
     lastThrowTime = 0;
     immune = false;
+    immuneEndboss = false;
 
     /**
      * Constructor for initializing the canvas and setting up the keyboard input.
@@ -48,12 +49,12 @@ class World {
             this.checkCollisionBottlesEnemy();
             this.checkIsAggressive();
             this.isGameOver();
-        }, 50);
+        }, 1000 / 40);
         pushInterval(runInterval);
 
         let enemyCollisionInterval = setInterval(() => {
             this.checkCollisionWithEnemy();
-        }, 10);
+        }, 1000 / 30);
         pushInterval(enemyCollisionInterval);
     }
 
@@ -154,6 +155,13 @@ class World {
         }, 300);
     }
 
+    makeImmuneEndboss() {
+        this.immuneEndboss = true;
+        setTimeout(() => {
+            this.immuneEndboss = false;
+        }, 500);
+    }
+
     /**
      * Checks for collisions with items in the level and adds corresponding items to the character's inventory.
      */
@@ -204,8 +212,11 @@ class World {
                     bottle.isHitting = true;
                     enemy.enemyIsDead = true;
                     if (enemy instanceof Endboss) {
-                        enemy.hit();
-                        this.statusBar_Endboss.setPercentage(enemy.hp);
+                        if (!this.immuneEndboss) {
+                            enemy.hit();
+                            this.makeImmuneEndboss();
+                            this.statusBar_Endboss.setPercentage(enemy.hp);
+                        }
                     }
                 }
             })

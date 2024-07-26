@@ -7,7 +7,7 @@ class Endboss extends MovableObject {
         left: 80,
         right: 80
     };
-    hp = 120;
+    hp = 80;
     
     IMAGES_ALERT = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',

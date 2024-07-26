@@ -93,7 +93,7 @@ class MovableObject extends DrawableObject {
      * Otherwise, updates the last hit timestamp and triggers the animated move backward action.
      */
     hit() {
-        this.hp -= 10;
+        this.hp -= 25;
         if (this.hp < 0) {
             this.hp = 0;
         } else {
